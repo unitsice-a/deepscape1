@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>증권사 수수료 비교</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
 </head>
 <body>
   <main class="phone-gallery" aria-label="증권사 수수료 비교 모바일 화면">
@@ -13,68 +13,34 @@
       <div class="status"><span>9:41</span><span>▮▮ ◉ ▰</span></div>
       <header class="appbar"><span class="brand-mark">▥</span><strong>증권사 수수료 비교</strong><span class="menu-mark">☰</span></header>
       <div class="screen-content">
-        <section class="hero">
-          <div><h1>증권사 수수료 및<br>혜택 비교 대시보드</h1><p>거래 금액을 입력하고<br>증권사별 예상 수수료를 비교해 보세요.</p></div>
-          <div class="hero-graphic" aria-hidden="true">▥</div>
-        </section>
-        <section class="panel">
-          <h2>거래 조건 입력</h2>
-          <label for="trade-amount">거래 금액 (원)</label>
-          <input id="trade-amount" type="number" min="1" value="1000000" placeholder="예: 1,000,000">
-          <button class="primary-button" id="compare-button">⌕　수수료 비교하기</button>
-        </section>
+        <section class="hero"><div><h1>증권사 수수료 및<br>혜택 비교 대시보드</h1><p>거래 금액을 입력하고<br>증권사별 예상 수수료를 비교해 보세요.</p></div><div class="hero-graphic" aria-hidden="true">▥</div></section>
+        <section class="panel"><h2>거래 조건 입력</h2><label for="trade-amount">거래 금액 (원)</label><input id="trade-amount" type="number" min="1" value="1000000" placeholder="예: 1,000,000"><button class="primary-button" id="compare-button">⌕　수수료 비교하기</button></section>
         <p class="hint" id="input-hint">ⓘ　최소 1원 이상 입력해 주세요.</p>
       </div>
-      <nav class="tabbar" aria-label="하단 메뉴">
-        <button class="tab active" data-target="home"><span>⌂</span>홈</button>
-        <button class="tab" data-target="comparison"><span>⇄</span>수수료 비교</button>
-        <button class="tab" data-target="brokers"><span>▤</span>증권사 정보</button>
-      </nav>
+      <nav class="tabbar" aria-label="하단 메뉴"><button class="tab active" data-target="home"><span>⌂</span>홈</button><button class="tab" data-target="comparison"><span>⇄</span>수수료 비교</button><button class="tab" data-target="brokers"><span>▤</span>증권사 정보</button></nav>
     </section>
-
     <section class="phone" id="comparison">
       <div class="status"><span>9:41</span><span>▮▮ ◉ ▰</span></div>
       <header class="appbar"><span class="brand-mark">▥</span><strong>증권사 수수료 비교</strong><span class="menu-mark">☰</span></header>
-      <div class="screen-content">
-        <div class="amount-banner" id="amount-banner">거래 금액: 1,000,000원</div>
+      <div class="screen-content"><div class="amount-banner" id="amount-banner">거래 금액: 1,000,000원</div>
         <div class="broker-list" id="broker-list">
           <article class="broker-card"><span class="broker-symbol">A</span><div class="broker-copy"><strong>증권사 A</strong><small>수수료율 0.003%</small></div><strong class="fee">30원</strong></article>
           <article class="broker-card best"><span class="broker-symbol">B</span><div class="broker-copy"><strong>증권사 B</strong><small>수수료율 0.004%</small></div><div class="fee-wrap"><strong class="fee">40원</strong><span class="best-label">예시 최저</span></div></article>
           <article class="broker-card"><span class="broker-symbol">C</span><div class="broker-copy"><strong>증권사 C</strong><small>수수료율 0.005%</small></div><strong class="fee">50원</strong></article>
         </div>
-        <section class="explanation"><strong>◉　비교 결과 설명</strong><p id="result-explanation">입력한 거래 금액을 기준으로 증권사별 예상 수수료를 비교했습니다.</p></section>
-        <button class="outline-button" id="edit-amount">↻　다시 입력하기</button>
+        <section class="explanation"><strong>◉　비교 결과 설명</strong><p id="result-explanation">입력한 거래 금액을 기준으로 증권사별 예상 수수료를 비교했습니다.</p></section><button class="outline-button" id="edit-amount">↻　다시 입력하기</button>
       </div>
-      <nav class="tabbar" aria-label="하단 메뉴">
-        <button class="tab" data-target="home"><span>⌂</span>홈</button>
-        <button class="tab active" data-target="comparison"><span>⇄</span>수수료 비교</button>
-        <button class="tab" data-target="brokers"><span>▤</span>증권사 정보</button>
-      </nav>
+      <nav class="tabbar" aria-label="하단 메뉴"><button class="tab" data-target="home"><span>⌂</span>홈</button><button class="tab active" data-target="comparison"><span>⇄</span>수수료 비교</button><button class="tab" data-target="brokers"><span>▤</span>증권사 정보</button></nav>
     </section>
-
     <section class="phone" id="brokers">
       <div class="status"><span>9:41</span><span>▮▮ ◉ ▰</span></div>
       <header class="appbar"><span class="brand-mark">▥</span><strong>증권사 수수료 비교</strong><span class="menu-mark">☰</span></header>
       <div class="screen-content">
         <div class="detail-heading"><span class="broker-symbol large" id="detail-symbol">B</span><h1 id="detail-title">증권사 B</h1><span class="best-chip">비교 예시</span></div>
-        <section class="panel detail-panel">
-          <h2>예상 수수료</h2>
-          <p class="large-fee" id="detail-fee">40원 <small>(수수료율 0.004%)</small></p>
-          <hr>
-          <h2>추가 정보</h2>
-          <p class="detail-line">✓　주요 혜택: 수수료 할인 이벤트</p>
-          <p class="detail-line">✓　적용 조건: 거래 금액 기준</p>
-          <p class="detail-line">✓　정보 출처: 추후 공식 자료 확인</p>
-        </section>
-        <button class="primary-button" id="select-broker">이 증권사 선택하기</button>
-        <p class="hint hidden" id="selection-message">선택한 증권사를 확인했습니다. 실제 계좌 개설이나 거래는 진행되지 않습니다.</p>
-        <button class="text-button" id="back-to-results">〈　비교 결과로 돌아가기</button>
+        <section class="panel detail-panel"><h2>예상 수수료</h2><p class="large-fee" id="detail-fee">40원 <small>(수수료율 0.004%)</small></p><hr><h2>추가 정보</h2><p class="detail-line">✓　주요 혜택: 수수료 할인 이벤트</p><p class="detail-line">✓　적용 조건: 거래 금액 기준</p><p class="detail-line">✓　정보 출처: 추후 공식 자료 확인</p></section>
+        <button class="primary-button" id="select-broker">이 증권사 선택하기</button><p class="hint hidden" id="selection-message">선택한 증권사를 확인했습니다. 실제 계좌 개설이나 거래는 진행되지 않습니다.</p><button class="text-button" id="back-to-results">〈　비교 결과로 돌아가기</button>
       </div>
-      <nav class="tabbar" aria-label="하단 메뉴">
-        <button class="tab" data-target="home"><span>⌂</span>홈</button>
-        <button class="tab" data-target="comparison"><span>⇄</span>수수료 비교</button>
-        <button class="tab active" data-target="brokers"><span>▤</span>증권사 정보</button>
-      </nav>
+      <nav class="tabbar" aria-label="하단 메뉴"><button class="tab" data-target="home"><span>⌂</span>홈</button><button class="tab" data-target="comparison"><span>⇄</span>수수료 비교</button><button class="tab active" data-target="brokers"><span>▤</span>증권사 정보</button></nav>
     </section>
   </main>
 </body>
