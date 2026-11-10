@@ -17,6 +17,7 @@
     --text-muted: #64748b;
     --border-color: #e2e8f0;
     --success: #10b981;
+    --danger: #ef4444;
   }
 
   * {
@@ -42,7 +43,7 @@
     }
   }
 
-  /* 모바일 디바이스 프레임 */
+  /* 모바일 디바이스 프레임 (390px 반응형) */
   .mobile-device {
     width: 100%;
     max-width: 390px;
@@ -65,7 +66,7 @@
     }
   }
 
-  /* 헤더 앱바 */
+  /* 헤더 앱바 (우측 상단 로그인/프로필 버튼 포함) */
   .app-header {
     height: 60px;
     background-color: var(--card-bg);
@@ -73,7 +74,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 16px;
     flex-shrink: 0;
     z-index: 10;
   }
@@ -81,14 +82,15 @@
   .app-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    cursor: pointer;
   }
 
   .brand-icon {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,7 +98,7 @@
   }
 
   .brand-name {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 800;
     color: var(--text-main);
     letter-spacing: -0.5px;
@@ -105,7 +107,28 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+  }
+
+  /* 오른쪽 상단 로그인 / 프로필 버튼 */
+  .header-auth-btn {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+  }
+
+  .header-auth-btn:hover {
+    background-color: var(--primary);
+    color: white;
   }
 
   .reset-btn {
@@ -117,15 +140,8 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 6px 8px;
+    padding: 6px;
     border-radius: 8px;
-    transition: background 0.2s;
-  }
-
-  .reset-btn:hover {
-    background-color: var(--primary-light);
-    color: var(--primary);
   }
 
   /* 메인 스크롤 영역 */
@@ -248,7 +264,6 @@
     color: var(--text-muted);
   }
 
-  /* 빠른 선택 버튼 그리드 */
   .quick-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -274,7 +289,6 @@
     border-color: var(--primary);
   }
 
-  /* 메인 실행 버튼 */
   .btn-primary {
     width: 100%;
     height: 52px;
@@ -298,7 +312,6 @@
     background-color: var(--primary-dark);
   }
 
-  /* 팁 상자 */
   .tip-box {
     background-color: var(--primary-light);
     border-radius: 16px;
@@ -335,7 +348,6 @@
     line-height: 1.45;
   }
 
-  /* 수수료 리스트 아이템 */
   .broker-card {
     background: white;
     border-radius: 16px;
@@ -423,7 +435,7 @@
     color: var(--text-muted);
   }
 
-  /* 하단 탭바 nav (4탭 구조) */
+  /* 하단 탭바 nav */
   .tab-bar {
     position: absolute;
     bottom: 0;
@@ -522,21 +534,114 @@
     cursor: pointer;
   }
 
-  /* 로그인 스타일 */
-  .login-box {
-    text-align: center;
-    padding: 20px 0;
+  /* 디테일해진 마이페이지 UI 스타일 */
+  .profile-card {
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
   }
 
-  .anonymous-badge {
-    display: inline-block;
-    background-color: var(--primary-light);
-    color: var(--primary);
-    padding: 6px 14px;
-    border-radius: 20px;
+  .profile-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .profile-avatar {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .btn-logout {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 10px;
     font-size: 12px;
     font-weight: 700;
-    margin-bottom: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-logout:hover {
+    background: rgba(239, 68, 68, 0.8);
+  }
+
+  /* 자산 차트 및 프로그래스바 */
+  .asset-progress-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    margin: 12px 0 8px 0;
+  }
+
+  .asset-segment-1 { width: 70%; background: #60a5fa; }
+  .asset-segment-2 { width: 20%; background: #34d399; }
+  .asset-segment-3 { width: 10%; background: #fbbf24; }
+
+  .asset-legend {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .detail-card {
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 14px;
+  }
+
+  .detail-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .coupon-item {
+    background: #f8fafc;
+    border: 1px dashed var(--primary);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13px;
+  }
+
+  .history-item:last-child {
+    border-bottom: none;
   }
 
   .login-input {
@@ -549,76 +654,12 @@
     font-weight: 700;
     outline: none;
     margin-bottom: 12px;
-    transition: border-color 0.2s;
   }
 
   .login-input:focus {
     border-color: var(--primary);
   }
 
-  /* 마이페이지 스타일 */
-  .profile-card {
-    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-    color: white;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .profile-avatar {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 900;
-  }
-
-  .asset-box {
-    background: var(--bg-main);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 14px;
-    border: 1px solid var(--border-color);
-  }
-
-  .asset-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .asset-row:last-child {
-    margin-bottom: 0;
-  }
-
-  .my-menu-item {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 14px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--text-main);
-  }
-
-  .my-menu-item:hover {
-    border-color: var(--primary);
-  }
-
-  /* 토스트 알림 메시지 */
   .toast {
     position: absolute;
     top: 70px;
@@ -642,7 +683,6 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* 탭 숨김 처리 */
   .tab-content {
     display: none;
   }
@@ -654,25 +694,29 @@
 </head>
 <body>
 
-  <!-- 모바일 디바이스 프레임 -->
   <div class="mobile-device">
     
-    <!-- 앱 상단 헤더 -->
+    <!-- 앱 헤더 (우측 상단 로그인 / 프로필 버튼 탑재) -->
     <header class="app-header">
-      <div class="app-brand">
+      <div class="app-brand" onclick="switchTab('home')">
         <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
         </div>
         <span class="brand-name">수수료 다모아</span>
       </div>
+
       <div class="header-right">
+        <!-- 로그인 전/후 상태에 따라 변경되는 우측 상단 버튼 -->
+        <button id="header-auth-btn" class="header-auth-btn" onclick="handleHeaderAuthClick()">
+          <span>🔑 로그인</span>
+        </button>
         <button onclick="resetApp()" class="reset-btn" title="초기화">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
         </button>
       </div>
     </header>
 
-    <!-- 앱 메인 컨텐츠 영역 -->
+    <!-- 메인 콘텐츠 영역 -->
     <main class="app-content">
 
       <!-- 1. 🏠 홈 탭 -->
@@ -696,7 +740,6 @@
             <span class="currency-unit">원</span>
           </div>
 
-          <!-- 빠른 선택 버튼 -->
           <div class="quick-grid">
             <button onclick="addAmount(1000000)" class="quick-btn">+100만</button>
             <button onclick="addAmount(5000000)" class="quick-btn">+500만</button>
@@ -738,7 +781,6 @@
           <span style="font-size: 11px; color: var(--text-muted);">※ 낮은 수수료순</span>
         </div>
 
-        <!-- 동적 증권사 리스트 -->
         <div id="compare-list"></div>
 
         <div style="background: rgba(226, 232, 240, 0.5); padding: 12px 14px; border-radius: 12px; font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-top: 14px;">
@@ -757,72 +799,107 @@
         <div id="info-list"></div>
       </section>
 
-      <!-- 4. 👤 나의 정보 (마이페이지) 탭 -->
+      <!-- 4. 👤 나의 정보 (디테일 마이페이지) 탭 -->
       <section id="tab-mypage" class="tab-content">
-        <div id="mypage-logged-out" class="card" style="text-align: center; padding: 30px 20px;">
-          <div style="font-size: 40px; margin-bottom: 12px;">🔒</div>
-          <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">로그인이 필요합니다</h3>
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4;">개인정보 노출 걱정 없는 안심 익명 보호 로그인으로 보유 자산과 맞춤 혜택을 확인하세요.</p>
-          <button onclick="openLoginModal()" class="btn-primary">익명 보호 로그인하기</button>
+        
+        <!-- 로그인 미완료 시 화면 -->
+        <div id="mypage-logged-out" class="card" style="text-align: center; padding: 35px 20px;">
+          <div style="font-size: 42px; margin-bottom: 12px;">🛡️</div>
+          <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">익명 보호 로그인</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 22px; line-height: 1.4;">
+            이메일이나 닉네임만으로 개인정보 없이 로그인하고<br>나의 보유 자산과 주식 쿠폰 혜택을 확인하세요.
+          </p>
+          <button onclick="openLoginModal()" class="btn-primary">로그인 / 회원가입하기</button>
         </div>
 
+        <!-- 로그인 완료 시 상세 마이페이지 화면 -->
         <div id="mypage-logged-in" style="display: none;">
+          
+          <!-- 프로필 & 총 자산 요약 카드 -->
           <div class="profile-card">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <div class="profile-avatar" id="user-avatar-initial">익</div>
-              <div>
-                <div style="font-size: 12px; opacity: 0.8; font-weight: 600;">익명 보호 프로필</div>
-                <div id="user-display-name" style="font-size: 18px; font-weight: 900;">닉네임</div>
+            <div class="profile-header-top">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="profile-avatar" id="user-avatar-initial">익</div>
+                <div>
+                  <div style="font-size: 11px; opacity: 0.85; font-weight: 600;">🔒 익명 보호 프로필</div>
+                  <div id="user-display-name" style="font-size: 18px; font-weight: 900;">사용자</div>
+                </div>
               </div>
+              <button onclick="logout()" class="btn-logout">로그아웃</button>
             </div>
-            <button onclick="logout()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">로그아웃</button>
+
+            <div style="margin-top: 10px;">
+              <span style="font-size: 12px; opacity: 0.85;">총 보유 자산 (시뮬레이션)</span>
+              <div style="font-size: 24px; font-weight: 900; margin-top: 2px;">45,200,000 원</div>
+            </div>
+
+            <!-- 자산 비중 프로그래스 바 -->
+            <div class="asset-progress-bar">
+              <div class="asset-segment-1" title="국내주식 70%"></div>
+              <div class="asset-segment-2" title="해외주식 20%"></div>
+              <div class="asset-segment-3" title="예수금 10%"></div>
+            </div>
+            <div class="asset-legend">
+              <span>🔵 국내주식 70%</span>
+              <span>🟢 해외주식 20%</span>
+              <span>🟡 예수금 10%</span>
+            </div>
           </div>
 
-          <!-- 보유 자산 카드 -->
-          <div class="asset-box">
-            <div style="font-size: 13px; font-weight: 800; color: var(--text-muted); margin-bottom: 10px;">📊 내 투자 자산 현황</div>
-            <div class="asset-row">
-              <span style="font-size: 14px; font-weight: 700; color: var(--text-main);">총 보유 자산</span>
-              <span style="font-size: 16px; font-weight: 900; color: var(--primary);">45,200,000 원</span>
+          <!-- 디테일 1: 주식 쿠폰함 -->
+          <div class="detail-card">
+            <div class="detail-title">
+              <span>🎟️ 나의 보유 주식 쿠폰</span>
+              <span style="color: var(--primary); font-size: 12px; margin-left: auto;">총 3장</span>
             </div>
-            <div class="asset-row">
-              <span style="font-size: 13px; color: var(--text-muted);">주식 평가금액</span>
-              <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">38,500,000 원</span>
+            <div class="coupon-item">
+              <div>
+                <div style="font-size: 13px; font-weight: 800; color: var(--text-main);">KB증권 수수료 3만원 할인권</div>
+                <div style="font-size: 11px; color: var(--text-muted);">2026.12.31까지 사용 가능</div>
+              </div>
+              <button onclick="showToast('KB증권 쿠폰이 적용되었습니다.')" style="background: var(--primary); color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer;">사용</button>
             </div>
-            <div class="asset-row">
-              <span style="font-size: 13px; color: var(--text-muted);">투자 대기 예수금</span>
-              <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">6,700,000 원</span>
+            <div class="coupon-item">
+              <div>
+                <div style="font-size: 13px; font-weight: 800; color: var(--text-main);">미래에셋 해외주식 $10 쿠폰</div>
+                <div style="font-size: 11px; color: var(--text-muted);">신규 계좌 개설시 자동지급</div>
+              </div>
+              <button onclick="showToast('미래에셋 쿠폰이 적용되었습니다.')" style="background: var(--primary); color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer;">사용</button>
             </div>
           </div>
 
-          <!-- 마이페이지 추가 메뉴들 -->
-          <div class="my-menu-item" onclick="showToast('보유 중인 주식 쿠폰: 3장 (총 5만원 상당)')">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span>🎟️</span> 주식 쿠폰함
+          <!-- 디테일 2: 최근 수수료 비교 기록 -->
+          <div class="detail-card">
+            <div class="detail-title">
+              <span>📋 최근 계산 기록</span>
             </div>
-            <span style="color: var(--primary); font-weight: 900;">3장</span>
+            <div class="history-item">
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">10,000,000원 거래 비교</div>
+                <div style="font-size: 11px; color: var(--text-muted);">KB증권 최저 (30,000원)</div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-muted);">방금 전</span>
+            </div>
+            <div class="history-item">
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">50,000,000원 거래 비교</div>
+                <div style="font-size: 11px; color: var(--text-muted);">KB증권 최저 (150,000원)</div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-muted);">어제</span>
+            </div>
           </div>
 
-          <div class="my-menu-item" onclick="showToast('최근 비교 내역: 1,000만원 (KB증권 최저)')">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span>📋</span> 최근 수수료 비교 기록
+          <!-- 디테일 3: 관심 증권사 -->
+          <div class="detail-card">
+            <div class="detail-title">
+              <span>⭐ 관심 등록 증권사</span>
             </div>
-            <span style="color: var(--text-muted); font-size: 12px;">상세보기 &gt;</span>
+            <div style="display: flex; gap: 8px;">
+              <span style="background: var(--primary-light); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">KB증권 (0.003%)</span>
+              <span style="background: var(--bg-main); color: var(--text-main); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">미래에셋증권 (0.0035%)</span>
+            </div>
           </div>
 
-          <div class="my-menu-item" onclick="showToast('관심 증권사: KB증권, 미래에셋증권')">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span>⭐</span> 관심 증권사 리스트
-            </div>
-            <span style="color: var(--text-muted); font-size: 12px;">2개 등록 &gt;</span>
-          </div>
-
-          <div class="my-menu-item" onclick="showToast('익명 보안 보호 모드가 안전하게 활성화되어 있습니다.')">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span>🛡️</span> 보안 및 익명 보호 설정
-            </div>
-            <span style="color: var(--success); font-size: 12px;">ON</span>
-          </div>
         </div>
       </section>
 
@@ -848,7 +925,7 @@
       </button>
     </nav>
 
-    <!-- 상세 모달 -->
+    <!-- 수수료 상세 모달 -->
     <div id="modal" class="modal-overlay">
       <div class="modal-body">
         <div class="modal-header">
@@ -877,9 +954,7 @@
           <p id="modal-condition" style="font-size: 12px; color: var(--text-muted); background: #f8fafc; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color);"></p>
         </div>
 
-        <button onclick="applyBroker()" class="btn-primary">
-          혜택받고 계좌 개설하기
-        </button>
+        <button onclick="applyBroker()" class="btn-primary">혜택받고 계좌 개설하기</button>
       </div>
     </div>
 
@@ -894,17 +969,12 @@
           <button onclick="closeLoginModal()" class="close-btn">✕</button>
         </div>
 
-        <div class="login-box">
-          <span class="anonymous-badge">🔒 이메일/비밀번호 수집 없음</span>
-          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4;">
-            본인인증이나 실명 정보 없이, 안전한 닉네임이나 가상 이메일만 입력하여 프라이빗하게 이용하세요.
+        <div style="text-align: center; padding: 10px 0;">
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">
+            본인인증이나 비밀번호 입력 없이, 사용하실 닉네임이나 이메일을 자유롭게 입력하여 안전하게 접속하세요.
           </p>
-
-          <input type="text" id="login-nickname-input" placeholder="사용하실 닉네임 또는 가상 이메일 입력" class="login-input">
-
-          <button onclick="executeLogin()" class="btn-primary" style="margin-top: 4px;">
-            안심 익명 로그인 시작
-          </button>
+          <input type="text" id="login-nickname-input" placeholder="닉네임 또는 이메일 입력" class="login-input">
+          <button onclick="executeLogin()" class="btn-primary">익명 로그인 완료</button>
         </div>
       </div>
     </div>
@@ -915,23 +985,35 @@
   </div>
 
 <script>
-  // 로그인 상태 및 사용자 정보 관리
   let currentUser = localStorage.getItem('anon_user') || null;
 
+  // 헤더 우측 상단 버튼 및 마이페이지 동기화
   function checkLoginState() {
+    const headerAuthBtn = document.getElementById('header-auth-btn');
     const loggedOutEl = document.getElementById('mypage-logged-out');
     const loggedInEl = document.getElementById('mypage-logged-in');
     const nameEl = document.getElementById('user-display-name');
     const avatarEl = document.getElementById('user-avatar-initial');
 
     if (currentUser) {
+      headerAuthBtn.innerHTML = `<span>👤 ${currentUser}님</span>`;
       loggedOutEl.style.display = 'none';
       loggedInEl.style.display = 'block';
       nameEl.textContent = currentUser;
       avatarEl.textContent = currentUser.charAt(0).toUpperCase();
     } else {
+      headerAuthBtn.innerHTML = `<span>🔑 로그인</span>`;
       loggedOutEl.style.display = 'block';
       loggedInEl.style.display = 'none';
+    }
+  }
+
+  // 상단 로그인 버튼 클릭시 처리
+  function handleHeaderAuthClick() {
+    if (currentUser) {
+      switchTab('mypage');
+    } else {
+      openLoginModal();
     }
   }
 
@@ -946,14 +1028,14 @@
   function executeLogin() {
     const inputVal = document.getElementById('login-nickname-input').value.trim();
     if (!inputVal) {
-      showToast('닉네임 또는 가상 이메일을 입력해 주세요.');
+      showToast('닉네임 또는 이메일을 입력해 주세요.');
       return;
     }
     currentUser = inputVal;
     localStorage.setItem('anon_user', currentUser);
     closeLoginModal();
     checkLoginState();
-    showToast(`환영합니다, ${currentUser}님! (익명 보호 로그인 완료)`);
+    showToast(`환영합니다, ${currentUser}님!`);
   }
 
   function logout() {
@@ -963,7 +1045,6 @@
     showToast('로그아웃되었습니다.');
   }
 
-  // 증권사 정적 데이터
   const brokers = [
     {
       id: 'kb',
@@ -1032,7 +1113,6 @@
     }
   ];
 
-  // 탭 전환
   function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
@@ -1049,7 +1129,6 @@
     }
   }
 
-  // 금액 추가
   function addAmount(val) {
     const input = document.getElementById('amount-input');
     const current = Number(input.value) || 0;
@@ -1057,7 +1136,6 @@
     showToast(`${(val / 10000).toLocaleString()}만원 추가되었습니다.`);
   }
 
-  // 계산 및 이동
   function calculateAndNavigate() {
     const amount = Number(document.getElementById('amount-input').value);
     if (!amount || amount <= 0) {
@@ -1068,7 +1146,6 @@
     showToast('수수료 비교 결과가 업데이트되었습니다.');
   }
 
-  // 비교 탭 렌더링
   function renderCompare() {
     const amount = Number(document.getElementById('amount-input').value) || 10000000;
     document.getElementById('target-amount-display').textContent = `${amount.toLocaleString()} 원`;
@@ -1104,7 +1181,6 @@
     }).join('');
   }
 
-  // 증권사 정보 탭 렌더링
   function renderInfo() {
     const listEl = document.getElementById('info-list');
     listEl.innerHTML = brokers.map(broker => `
@@ -1128,7 +1204,6 @@
     `).join('');
   }
 
-  // 모달 열기
   function openModal(id) {
     const broker = brokers.find(b => b.id === id);
     if (!broker) return;
@@ -1151,25 +1226,21 @@
     document.getElementById('modal').classList.add('active');
   }
 
-  // 모달 닫기
   function closeModal() {
     document.getElementById('modal').classList.remove('active');
   }
 
-  // 계좌개설 액션
   function applyBroker() {
     closeModal();
     showToast('해당 증권사로 연결됩니다. (시뮬레이션)');
   }
 
-  // 초기화
   function resetApp() {
     document.getElementById('amount-input').value = 10000000;
     switchTab('home');
     showToast('초기 상태로 되돌렸습니다.');
   }
 
-  // 토스트 메시지
   function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -1179,7 +1250,6 @@
     }, 2000);
   }
 
-  // 초기 로드시 로그인 상태 확인
   document.addEventListener('DOMContentLoaded', () => {
     checkLoginState();
   });
