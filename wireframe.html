@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>증권사 수수료 비교 대시보드 | 모바일 와이어프레임</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 18px 48px; color: #111; background: #f3f3f3; font-family: Arial, "Malgun Gothic", sans-serif; }
+    .page { max-width: 1080px; margin: 0 auto; }
+    .heading { margin-bottom: 28px; }
+    .heading h1 { margin: 0 0 8px; font-size: 27px; }
+    .heading p { margin: 0; color: #444; line-height: 1.6; }
+    .screens { display: grid; grid-template-columns: repeat(2, minmax(260px, 340px)); justify-content: center; gap: 34px; align-items: start; }
+    .screen-wrap h2 { margin: 0 0 12px; font-size: 18px; }
+    .phone { min-height: 650px; border: 2px solid #888; border-radius: 28px; background: #fff; padding: 13px 15px 16px; display: flex; flex-direction: column; box-shadow: 0 2px 5px #00000012; }
+    .status { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; margin: 0 2px 18px; }
+    .appbar { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #ddd; padding-bottom: 14px; font-size: 17px; }
+    .back { font-size: 23px; }
+    .content { padding-top: 24px; flex: 1; }
+    .eyebrow { color: #555; font-size: 12px; font-weight: bold; letter-spacing: .04em; }
+    h3 { font-size: 21px; line-height: 1.35; margin: 9px 0; }
+    .desc { font-size: 13px; line-height: 1.65; color: #444; }
+    .field { margin: 24px 0 18px; }
+    label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 8px; }
+    .input { height: 48px; border: 1px solid #aaa; border-radius: 9px; padding: 14px 12px; color: #555; font-size: 14px; }
+    .button { display: block; width: 100%; border: 1px solid #555; background: #555; color: white; border-radius: 9px; padding: 14px 10px; text-align: center; font-size: 15px; font-weight: bold; margin-top: 20px; }
+    .note { margin-top: 15px; padding: 12px; background: #f1f1f1; border: 1px solid #ddd; border-radius: 8px; font-size: 12px; line-height: 1.6; color: #333; }
+    .result-title { font-size: 16px; font-weight: bold; margin: 0 0 14px; }
+    .amount { background: #eee; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; }
+    .broker { display: grid; grid-template-columns: 32px 1fr auto; gap: 9px; align-items: center; padding: 15px 3px; border-bottom: 1px solid #ddd; }
+    .circle { width: 30px; height: 30px; border: 1px solid #777; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: bold; }
+    .broker strong { font-size: 13px; }
+    .broker small { display: block; color: #555; margin-top: 5px; font-size: 11px; }
+    .fee { font-size: 13px; text-align: right; }
+    .best { border: 1px solid #777; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin-top: 8px; background: #f7f7f7; }
+    .recommend { margin-top: 22px; border: 1px solid #999; border-radius: 10px; padding: 15px; }
+    .recommend strong { font-size: 14px; }
+    .recommend p { font-size: 12px; line-height: 1.6; margin-bottom: 0; color: #444; }
+    .states { max-width: 714px; margin: 30px auto 0; border: 1px solid #aaa; border-radius: 12px; background: #fff; padding: 18px; }
+    .states h2 { margin: 0 0 12px; font-size: 18px; }
+    .state { padding: 11px 12px; margin-top: 8px; border: 1px solid #ccc; border-radius: 7px; font-size: 13px; }
+    .flow { text-align: center; color: #777; font-size: 13px; margin: 10px 0 0; }
+    .caption { margin: 12px 2px 0; font-size: 13px; line-height: 1.65; color: #333; }
+    @media (max-width: 720px) { body { padding: 20px 12px 36px; } .screens { grid-template-columns: minmax(0, 360px); gap: 28px; } .phone { min-height: 610px; } .heading h1 { font-size: 22px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="heading">
+      <h1>증권사 수수료 비교 대시보드 · 모바일 와이어프레임</h1>
+      <p>후보군 A · 최소 기능 중심 · 흑백 와이어프레임 ver 0.3</p>
+    </header>
+    <div class="screens">
+      <section class="screen-wrap">
+        <h2>1. S-01 거래 조건 입력 화면</h2>
+        <div class="phone">
+          <div class="status"><span>9:41</span><span>▮▮ ◉ ▰</span></div>
+          <div class="appbar"><span>☰</span><strong>증권사 수수료 비교</strong><span style="margin-left:auto">⌕</span></div>
+          <div class="content">
+            <div class="eyebrow">S-01 · 거래 조건 입력</div>
+            <h3>증권사별 수수료를<br>간편하게 비교해 보세요</h3>
+            <p class="desc">거래 금액을 입력하면 증권사별 예상 수수료와 가장 유리한 결과를 확인할 수 있습니다.</p>
+            <div class="field">
+              <label>거래 금액 (원)</label>
+              <div class="input">예) 1,000,000</div>
+            </div>
+            <div class="button">수수료 비교하기</div>
+            <div class="note">입력 안내<br>거래 금액을 원 단위로 입력해 주세요.</div>
+          </div>
+          <div class="flow">하단 메뉴　　홈　　수수료 비교　　증권사 정보</div>
+        </div>
+        <p class="caption">거래 금액 입력 후 ‘수수료 비교하기’를 눌러 S-02 결과 화면으로 이동하는 구성</p>
+      </section>
+      <section class="screen-wrap">
+        <h2>2. S-02 수수료 비교 결과 화면</h2>
+        <div class="phone">
+          <div class="status"><span>9:41</span><span>▮▮ ◉ ▰</span></div>
+          <div class="appbar"><span class="back">‹</span><strong>수수료 비교 결과</strong></div>
+          <div class="content">
+            <div class="eyebrow">S-02 · 비교 결과</div>
+            <h3>증권사별 예상 수수료</h3>
+            <div class="amount">거래 금액　　1,000,000원</div>
+            <div class="broker"><span class="circle">A</span><div><strong>증권사 A</strong><small>수수료율 0.003%</small></div><strong class="fee">30원</strong></div>
+            <div class="broker best"><span class="circle">B</span><div><strong>증권사 B</strong><small>수수료율 0.002%</small></div><div class="fee"><strong>20원</strong><small>가장 저렴</small></div></div>
+            <div class="broker"><span class="circle">C</span><div><strong>증권사 C</strong><small>수수료율 0.005%</small></div><strong class="fee">50원</strong></div>
+            <div class="recommend"><strong>추천 증권사　›　증권사 B</strong><p>입력한 금액 기준으로 예상 수수료가 가장 낮은 증권사입니다.</p></div>
+            <div class="button" style="background:#fff;color:#222">거래 금액 다시 입력하기</div>
+            <div class="note">※ 증권사와 수수료율은 화면 구성을 위한 가상 예시입니다.</div>
+          </div>
+          <div class="flow">하단 메뉴　　홈　　수수료 비교　　증권사 정보</div>
+        </div>
+        <p class="caption">증권사별 예상 수수료를 비교하고 최저 수수료 결과와 간단한 설명을 확인하는 화면</p>
+      </section>
+    </div>
+    <section class="states">
+      <h2>3. 예외 상태 영역</h2>
+      <div class="state">처리 중　수수료를 계산하고 있습니다.</div>
+      <div class="state">오류　올바른 거래 금액을 입력해 주세요.</div>
+      <div class="state">결과 없음　비교할 수 있는 결과가 없습니다. 거래 금액을 확인해 주세요.</div>
+    </section>
+  </main>
+</body>
+</html>
