@@ -422,4 +422,511 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0
+    right: 0;
+    height: 70px;
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    z-index: 20;
+    padding-bottom: 5px;
+  }
+
+  .tab-item {
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .tab-icon {
+    font-size: 20px;
+  }
+
+  .tab-text {
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .tab-item.active {
+    color: var(--primary);
+  }
+
+  .tab-item.active .tab-text {
+    font-weight: 900;
+  }
+
+  /* 모달 */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 30;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-body {
+    background: white;
+    width: 100%;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    padding: 24px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.active .modal-body {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  /* 토스트 메시지 */
+  .toast {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background-color: rgba(15, 23, 42, 0.9);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* 탭 숨김 처리 */
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+  <!-- 모바일 디바이스 프레임 -->
+  <div class="mobile-device">
+    
+    <!-- 앱 상단 헤더 (스테이터스바 없음) -->
+    <header class="app-header">
+      <div class="app-brand">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+        </div>
+        <span class="brand-name">수수료 다모아</span>
+      </div>
+      <button onclick="resetApp()" class="reset-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        초기화
+      </button>
+    </header>
+
+    <!-- 앱 메인 컨텐츠 영역 -->
+    <main class="app-content">
+
+      <!-- 1. 🏠 홈 탭 -->
+      <section id="tab-home" class="tab-content active">
+        <div class="hero-banner">
+          <span class="hero-badge">2026년 최신 수수료 우대</span>
+          <h1 class="hero-title">주식 투자 시작전,<br>수수료부터 비교하세요</h1>
+          <p class="hero-sub">예상 거래 금액을 입력하면 증권사별 실시간 수수료를 한눈에 확인할 수 있습니다.</p>
+          <div class="hero-decor">%</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
+            거래 금액 입력
+          </div>
+
+          <label class="input-label" for="amount-input">매수 / 매도 금액 (원)</label>
+          <div class="input-wrapper">
+            <input type="number" id="amount-input" value="10000000" placeholder="금액 입력" class="amount-input">
+            <span class="currency-unit">원</span>
+          </div>
+
+          <!-- 빠른 선택 버튼 -->
+          <div class="quick-grid">
+            <button onclick="addAmount(1000000)" class="quick-btn">+100만</button>
+            <button onclick="addAmount(5000000)" class="quick-btn">+500만</button>
+            <button onclick="addAmount(10000000)" class="quick-btn">+1천만</button>
+            <button onclick="addAmount(50000000)" class="quick-btn">+5천만</button>
+          </div>
+
+          <button onclick="calculateAndNavigate()" class="btn-primary">
+            <span>수수료 비교하기</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-icon">💡</div>
+          <div>
+            <div class="tip-title">알아두세요!</div>
+            <div class="tip-desc">비대면 최초 신규 계좌 개설 시 평생 수수료 우대 혜택을 제공하는 증권사를 우선 추천해 드립니다.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ⇄ 수수료 비교 탭 -->
+      <section id="tab-compare" class="tab-content">
+        <div class="card" style="padding: 16px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; display: block;">입력한 거래 금액</span>
+              <span id="target-amount-display" style="font-size: 18px; font-weight: 900; color: var(--primary);">10,000,000 원</span>
+            </div>
+            <button onclick="switchTab('home')" style="border: none; background: var(--bg-main); padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; color: var(--text-main); cursor: pointer;">
+              금액 수정
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px;">
+          <span style="font-size: 12px; font-weight: 800; color: var(--text-main);">비교 결과 <strong id="total-count" style="color: var(--primary);">5</strong>개</span>
+          <span style="font-size: 11px; color: var(--text-muted);">※ 낮은 수수료순</span>
+        </div>
+
+        <!-- 동적 증권사 리스트 -->
+        <div id="compare-list"></div>
+
+        <div style="background: rgba(226, 232, 240, 0.5); padding: 12px 14px; border-radius: 12px; font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-top: 14px;">
+          • 유관기관 제비용(0.003%~0.005%)이 별도 부과될 수 있습니다.<br>
+          • 해당 금액은 이벤트 우대 수수료 기준입니다.
+        </div>
+      </section>
+
+      <!-- 3. ▤ 증권사 정보 탭 -->
+      <section id="tab-info" class="tab-content">
+        <div style="font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+          <span>증권사별 주요 혜택</span>
+          <span style="font-size: 11px; color: var(--primary); font-weight: 700;">터치하여 상세 보기</span>
+        </div>
+
+        <div id="info-list"></div>
+      </section>
+
+    </main>
+
+    <!-- 하단 탭바 nav -->
+    <nav class="tab-bar">
+      <button onclick="switchTab('home')" id="nav-home" class="tab-item active">
+        <span class="tab-icon">🏠</span>
+        <span class="tab-text">홈</span>
+      </button>
+      <button onclick="switchTab('compare')" id="nav-compare" class="tab-item">
+        <span class="tab-icon">⇄</span>
+        <span class="tab-text">수수료 비교</span>
+      </button>
+      <button onclick="switchTab('info')" id="nav-info" class="tab-item">
+        <span class="tab-icon">▤</span>
+        <span class="tab-text">증권사 정보</span>
+      </button>
+    </nav>
+
+    <!-- 상세 모달 -->
+    <div id="modal" class="modal-overlay">
+      <div class="modal-body">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div id="modal-logo" class="broker-badge-logo">A</div>
+            <div>
+              <h3 id="modal-title" style="font-size: 18px; font-weight: 800; color: var(--text-main);">증권사</h3>
+              <span id="modal-tag" class="tag-best" style="margin-top: 4px; display: inline-block;">우대혜택</span>
+            </div>
+          </div>
+          <button onclick="closeModal()" class="close-btn">✕</button>
+        </div>
+
+        <div style="background-color: var(--bg-main); padding: 14px; border-radius: 14px; margin-bottom: 16px;">
+          <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 2px;">수수료율</span>
+          <span id="modal-rate" style="font-size: 18px; font-weight: 900; color: var(--primary);">0.003%</span>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <h4 style="font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">주요 혜택 안내</h4>
+          <div id="modal-benefits" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <h4 style="font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">혜택 적용 대상</h4>
+          <p id="modal-condition" style="font-size: 12px; color: var(--text-muted); background: #f8fafc; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color);"></p>
+        </div>
+
+        <button onclick="applyBroker()" class="btn-primary">
+          혜택받고 계좌 개설하기
+        </button>
+      </div>
+    </div>
+
+    <!-- 토스트 알림 메시지 -->
+    <div id="toast" class="toast">알림 메시지</div>
+
+  </div>
+
+<script>
+  // 증권사 정적 데이터
+  const brokers = [
+    {
+      id: 'kb',
+      name: 'KB증권',
+      color: 'linear-gradient(135deg, #f59e0b, #d97706)',
+      rate: 0.003,
+      tag: '최저 수수료',
+      benefits: [
+        '신규 고객 평생 수수료 우대 (0.003%)',
+        '해외주식 원화주문 수수료 0원',
+        '주식 쿠폰 3만원 즉시 지급'
+      ],
+      condition: '비대면 최초 신규 계좌 개설 및 이벤트 신청 시'
+    },
+    {
+      id: 'mirae',
+      name: '미래에셋증권',
+      color: 'linear-gradient(135deg, #ea580c, #c2410c)',
+      rate: 0.0035,
+      tag: '인기 증권사',
+      benefits: [
+        '온라인 주식 거래 수수료 평생 우대',
+        '미국 주식 거래 축하금 $30 지급',
+        '실시간 다우존스 뉴스 무료'
+      ],
+      condition: '신규 및 휴면 고객 대상 (이벤트 기간 내)'
+    },
+    {
+      id: 'nh',
+      name: 'NH투자증권 (나무)',
+      color: 'linear-gradient(135deg, #10b981, #047857)',
+      rate: 0.004,
+      tag: '공모주 추천',
+      benefits: [
+        '국내 주식 수수료 우대 혜택',
+        '환전 우대율 최대 100%',
+        '공모주 청약 수수료 면제'
+      ],
+      condition: '나무 전용 앱을 통한 비대면 계좌 개설 고객'
+    },
+    {
+      id: 'kiwoom',
+      name: '키움증권',
+      color: 'linear-gradient(135deg, #e11d48, #be123c)',
+      rate: 0.0045,
+      tag: '점유율 1위',
+      benefits: [
+        '영웅문 앱 이용 시 우대 수수료',
+        '현금 4만원 100% 증정 이벤트',
+        '조건 검색식 무제한 이용'
+      ],
+      condition: '비대면 계좌 개설 이벤트 신청 완료 시'
+    },
+    {
+      id: 'samsung',
+      name: '삼성증권',
+      color: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+      rate: 0.005,
+      tag: '우수 프리미엄',
+      benefits: [
+        '온라인 거래 우대 수수료율 적용',
+        '해외주식 지원금 $20 지원',
+        '프리미엄 투자 리포트 제공'
+      ],
+      condition: 'mPOP 앱에서 최초 신규 계좌 개설 고객'
+    }
+  ];
+
+  // 탭 전환
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+    document.getElementById(`nav-${tabId}`).classList.add('active');
+
+    if (tabId === 'compare') {
+      renderCompare();
+    } else if (tabId === 'info') {
+      renderInfo();
+    }
+  }
+
+  // 금액 추가
+  function addAmount(val) {
+    const input = document.getElementById('amount-input');
+    const current = Number(input.value) || 0;
+    input.value = current + val;
+    showToast(`${(val / 10000).toLocaleString()}만원 추가되었습니다.`);
+  }
+
+  // 계산 및 이동
+  function calculateAndNavigate() {
+    const amount = Number(document.getElementById('amount-input').value);
+    if (!amount || amount <= 0) {
+      showToast('올바른 금액을 입력해 주세요.');
+      return;
+    }
+    switchTab('compare');
+    showToast('수수료 비교 결과가 업데이트되었습니다.');
+  }
+
+  // 비교 탭 렌더링
+  function renderCompare() {
+    const amount = Number(document.getElementById('amount-input').value) || 10000000;
+    document.getElementById('target-amount-display').textContent = `${amount.toLocaleString()} 원`;
+
+    // 최저 수수료순 정렬
+    const sorted = [...brokers].sort((a, b) => (amount * a.rate) - (amount * b.rate));
+    document.getElementById('total-count').textContent = sorted.length;
+
+    const listEl = document.getElementById('compare-list');
+    listEl.innerHTML = sorted.map((broker, index) => {
+      const fee = Math.round(amount * broker.rate);
+      const isBest = index === 0;
+
+      return `
+        <div class="broker-card ${isBest ? 'best' : ''}" onclick="openModal('${broker.id}')">
+          <div class="broker-left">
+            <div class="broker-badge-logo" style="background: ${broker.color};">
+              ${broker.name.charAt(0)}
+            </div>
+            <div>
+              <div class="broker-info-name">
+                ${broker.name}
+                ${isBest ? `<span class="tag-best">가장 저렴!</span>` : ''}
+              </div>
+              <div class="broker-info-rate">수수료율 ${(broker.rate * 100).toFixed(3)}%</div>
+            </div>
+          </div>
+          <div class="broker-right">
+            <div class="price-value ${isBest ? 'best-text' : ''}">${fee.toLocaleString()}원</div>
+            <div class="price-label">예상 수수료</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 증권사 정보 탭 렌더링
+  function renderInfo() {
+    const listEl = document.getElementById('info-list');
+    listEl.innerHTML = brokers.map(broker => `
+      <div class="card" style="cursor: pointer; margin-bottom: 12px;" onclick="openModal('${broker.id}')">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="broker-badge-logo" style="background: ${broker.color}; width: 36px; height: 36px; font-size: 15px;">
+              ${broker.name.charAt(0)}
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 15px; color: var(--text-main);">${broker.name}</div>
+              <div style="font-size: 11px; color: var(--primary); font-weight: 700;">수수료율 ${(broker.rate * 100).toFixed(3)}%</div>
+            </div>
+          </div>
+          <span style="font-size: 11px; background: var(--bg-main); padding: 4px 10px; border-radius: 20px; font-weight: 700; color: var(--text-muted);">${broker.tag}</span>
+        </div>
+        <div style="background: var(--bg-main); padding: 10px 12px; border-radius: 10px; font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px;">
+          ${broker.benefits.slice(0, 2).map(b => `<div>• ${b}</div>`).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // 모달 열기
+  function openModal(id) {
+    const broker = brokers.find(b => b.id === id);
+    if (!broker) return;
+
+    const logo = document.getElementById('modal-logo');
+    logo.style.background = broker.color;
+    logo.textContent = broker.name.charAt(0);
+
+    document.getElementById('modal-title').textContent = broker.name;
+    document.getElementById('modal-tag').textContent = broker.tag;
+    document.getElementById('modal-rate').textContent = `${(broker.rate * 100).toFixed(3)}%`;
+    document.getElementById('modal-condition').textContent = broker.condition;
+
+    document.getElementById('modal-benefits').innerHTML = broker.benefits.map(b => `
+      <div style="font-size: 12px; color: var(--text-main); background: #f1f5f9; padding: 10px; border-radius: 8px; font-weight: 700;">
+        ✔ ${b}
+      </div>
+    `).join('');
+
+    document.getElementById('modal').classList.add('active');
+  }
+
+  // 모달 닫기
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+  }
+
+  // 계좌개설 액션
+  function applyBroker() {
+    closeModal();
+    showToast('해당 증권사로 연결됩니다. (시뮬레이션)');
+  }
+
+  // 초기화
+  function resetApp() {
+    document.getElementById('amount-input').value = 10000000;
+    switchTab('home');
+    showToast('초기 상태로 되돌렸습니다.');
+  }
+
+  // 토스트 메시지
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+</script>
+</body>
+</html>
