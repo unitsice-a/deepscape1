@@ -28,7 +28,7 @@
   }
 
   body {
-    background-color: #cbd5e1;
+    background-color: #f8fafc;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,33 +36,20 @@
     padding: 0;
   }
 
-  @media (min-width: 640px) {
-    body {
-      padding: 20px;
-    }
-  }
-
-  /* 모바일 디바이스 프레임 (상단 스테이터스바 없음) */
+  /* 화면 전체를 차지하도록 디바이스 프레임 크기 수정 */
   .mobile-device {
     width: 100%;
-    max-width: 390px;
+    max-width: 100%;
     height: 100vh;
-    max-height: 844px;
+    max-height: 100vh;
     background-color: #f8fafc;
     border-radius: 0px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    border: 1px solid #cbd5e1;
-  }
-
-  @media (min-width: 640px) {
-    .mobile-device {
-      border-radius: 40px;
-      height: 844px;
-    }
+    border: none;
   }
 
   /* 헤더 앱바 */
