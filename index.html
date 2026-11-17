@@ -1097,7 +1097,7 @@
     const previous=selectedMarket; selectedMarket=document.getElementById('market-select').value;
     const input=document.getElementById('amount-input');
     if(previous!==selectedMarket){if(selectedMarket==='us'&&Number(input.value)===10000000)input.value=1000;if(selectedMarket==='domestic'&&Number(input.value)===1000)input.value=10000000;}
-    document.getElementById('amount-label').textContent=selectedMarket==='us'?'매수 / 매도 금액 (USD)':'매수 / 매도 금액 (원)';
+    document.getElementById('amount-label').textContent=selectedMarket==='us'?'매수 / 매도 금액 (USD)':'매수 / 매도 금액 (원)';document.getElementById('market-domestic-btn').classList.toggle('active',selectedMarket==='domestic');document.getElementById('market-us-btn').classList.toggle('active',selectedMarket==='us');
     document.querySelector('.currency-unit').textContent=selectedMarket==='us'?'USD':'원';
     const quick=document.querySelector('.quick-grid');
     quick.innerHTML=selectedMarket==='us'?'<button onclick="addAmount(100)" class="quick-btn">+$100</button><button onclick="addAmount(500)" class="quick-btn">+$500</button><button onclick="addAmount(1000)" class="quick-btn">+$1,000</button><button onclick="addAmount(5000)" class="quick-btn">+$5,000</button>':'<button onclick="addAmount(1000000)" class="quick-btn">+100만</button><button onclick="addAmount(5000000)" class="quick-btn">+500만</button><button onclick="addAmount(10000000)" class="quick-btn">+1천만</button><button onclick="addAmount(50000000)" class="quick-btn">+5천만</button>';
