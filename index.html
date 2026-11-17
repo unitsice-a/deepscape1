@@ -821,7 +821,7 @@
             </div>
 
             <div style="margin-top: 10px;">
-              <span style="font-size: 12px; opacity: 0.85;">총 보유 자산 (시뮬레이션)</span>
+              <span style="font-size: 12px; opacity: 0.85;">총 보유 자산 (화면 예시 · 실제 계좌 연동 아님)</span>
               <div style="font-size: 24px; font-weight: 900; margin-top: 2px;">45,200,000 원</div>
             </div>
 
@@ -1039,10 +1039,10 @@
   const DATA_CHECKED='2026-11-17';
   // 공식 안내에서 확인한 온라인 대표 요율. 이벤트·계좌·거래채널별 적용 조건은 별도 확인 필요.
   const brokers=[
-    {id:'kb',name:'KB증권',group:'full',color:'#d97706',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['국내·미국주식 요율은 계좌별 공식 안내 확인 필요'],condition:'계좌 유형과 이벤트 참여 여부에 따라 달라질 수 있습니다.',source:'https://www.kbsec.com/go.able?linkcd=m06030007'},
+    {id:'kb',name:'KB증권',group:'full',color:'#d97706',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['국내·미국주식 요율은 계좌별 공식 안내 확인 필요'],condition:'계좌 유형과 이벤트 참여 여부에 따라 달라질 수 있습니다.',source:'https://www.kbsec.com/'},
     {id:'mirae',name:'미래에셋증권',group:'full',color:'#ea580c',domesticRate:.00014,usRate:.0025,tag:'종합 증권사',benefits:['국내 다이렉트 온라인 기본요율 0.014%','미국주식 온라인 기본요율 0.25%'],condition:'다이렉트 계좌 기준 기본요율입니다. 이벤트 우대는 신청·기간 조건을 확인하세요.',source:'https://securities.miraeasset.com/hki/hki7000/v05.do?cs_ecis_id=202412029'},
-    {id:'nh',name:'NH투자증권 (나무)',group:'full',color:'#059669',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['나무 계좌의 국내·미국주식 요율은 공식 안내 확인 필요'],condition:'나무 계좌 유형과 이벤트 조건에 따라 달라질 수 있습니다.',source:'https://www.mynamuh.com/tx/WMDoc.action?viewPage=/tx/customerService/chargeInfo.jsp'},
-    {id:'kiwoom',name:'키움증권',group:'online',color:'#e11d48',domesticRate:.00015,usRate:.0025,tag:'온라인 중심',benefits:['국내주식 온라인 대표요율 0.015%','미국주식 온라인 기본요율 0.25%'],condition:'제휴 안내에서 확인한 대표요율이며 계좌별·이벤트 적용 여부를 확인해야 합니다.',source:'https://www.kiwoom.com/h/customer/fee/VFeeInfoView'},
+    {id:'nh',name:'NH투자증권 (나무)',group:'full',color:'#059669',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['나무 계좌의 국내·미국주식 요율은 공식 안내 확인 필요'],condition:'나무 계좌 유형과 이벤트 조건에 따라 달라질 수 있습니다.',source:'https://www.mynamuh.com/'},
+    {id:'kiwoom',name:'키움증권',group:'online',color:'#e11d48',domesticRate:.00015,usRate:.0025,tag:'온라인 중심',benefits:['국내주식 온라인 대표요율 0.015%','미국주식 온라인 기본요율 0.25%'],condition:'제휴 안내에서 확인한 대표요율이며 계좌별·이벤트 적용 여부를 확인해야 합니다.',source:'https://www.kakaobank.com/products/kiwoomStockAccount'},
     {id:'samsung',name:'삼성증권',group:'full',color:'#2563eb',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['국내 온라인 수수료는 거래금액 구간별 차등','미국주식 요율은 계좌별 공식 안내 확인 필요'],condition:'국내 온라인 수수료는 금액별 정률·정액 요율 및 최저수수료 조건이 있습니다.',source:'https://www.samsungpop.com/ux/kor/customer/guide/workproductguide/commission.do',samsungTier:true},
     {id:'korea',name:'한국투자증권 (뱅키스)',group:'full',color:'#0f766e',domesticRate:.000140527,usRate:.0025,tag:'종합 증권사',benefits:['뱅키스 국내주식 온라인 KRX 0.0140527%','미국주식 온라인 기본요율 0.25%'],condition:'뱅키스 온라인 계좌 기준입니다. 영업점 계좌는 다른 요율이 적용될 수 있습니다.',source:'https://securities.koreainvestment.com/main/customer/guide/_static/TF04ae010000.jsp'},
     {id:'shinhan',name:'신한투자증권',group:'full',color:'#1d4ed8',domesticRate:.001891639,usRate:.0025,tag:'종합 증권사',benefits:['국내주식 모바일 온라인 일반요율 0.1891639%','미국주식 온라인 기본요율 0.25%'],condition:'모바일 온라인 일반요율 기준입니다. 계좌별 우대수수료는 별도 확인이 필요합니다.',source:'https://ir.shinhaninvest.com/siw/customer-center/guide/business_guide_charge_tab1/contents.do'},
@@ -1093,7 +1093,15 @@
     showToast('수수료 비교 결과가 업데이트되었습니다.');
   }
 
-  function updateMarketLabel(){selectedMarket=document.getElementById('market-select').value;document.getElementById('amount-label').textContent=selectedMarket==='us'?'매수 / 매도 금액 (USD)':'매수 / 매도 금액 (원)';document.querySelector('.currency-unit').textContent=selectedMarket==='us'?'USD':'원';}
+  function updateMarketLabel(){
+    const previous=selectedMarket; selectedMarket=document.getElementById('market-select').value;
+    const input=document.getElementById('amount-input');
+    if(previous!==selectedMarket){if(selectedMarket==='us'&&Number(input.value)===10000000)input.value=1000;if(selectedMarket==='domestic'&&Number(input.value)===1000)input.value=10000000;}
+    document.getElementById('amount-label').textContent=selectedMarket==='us'?'매수 / 매도 금액 (USD)':'매수 / 매도 금액 (원)';
+    document.querySelector('.currency-unit').textContent=selectedMarket==='us'?'USD':'원';
+    const quick=document.querySelector('.quick-grid');
+    quick.innerHTML=selectedMarket==='us'?'<button onclick="addAmount(100)" class="quick-btn">+$100</button><button onclick="addAmount(500)" class="quick-btn">+$500</button><button onclick="addAmount(1000)" class="quick-btn">+$1,000</button><button onclick="addAmount(5000)" class="quick-btn">+$5,000</button>':'<button onclick="addAmount(1000000)" class="quick-btn">+100만</button><button onclick="addAmount(5000000)" class="quick-btn">+500만</button><button onclick="addAmount(10000000)" class="quick-btn">+1천만</button><button onclick="addAmount(50000000)" class="quick-btn">+5천만</button>';
+  }
   function setMarket(m){selectedMarket=m;document.getElementById('market-select').value=m;updateMarketLabel();document.getElementById('market-domestic-btn').classList.toggle('active',m==='domestic');document.getElementById('market-us-btn').classList.toggle('active',m==='us');renderCompare();}
   function renderCompare(){
     const amount=Number(document.getElementById('amount-input').value)||(selectedMarket==='us'?1000:10000000),unit=selectedMarket==='us'?'USD':'원';
