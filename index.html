@@ -28,27 +28,14 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  body {
-    background-color: #f8fafc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  @media (min-width: 640px) {
-    body {
-      padding: 20px 0;
-    }
-  }
+  body { background-color:#f8fafc; display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:0; }
 
   /* 모바일 디바이스 프레임 (390px 반응형) */
   .mobile-device {
     width: 100%;
     max-width: 390px;
     height: 100vh;
-    max-height: 844px;
+    max-height: none;
     background-color: #f8fafc;
     border-radius: 0px;
     box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15);
@@ -60,10 +47,7 @@
   }
 
   @media (min-width: 640px) {
-    .mobile-device {
-      border-radius: 40px;
-      height: 844px;
-    }
+    .mobile-device { border-radius:0; height:100vh; max-height:none; box-shadow:none; }
   }
 
   /* 헤더 앱바 (우측 상단 로그인/프로필 버튼 포함) */
@@ -476,9 +460,13 @@
     color: var(--primary);
   }
 
-  .tab-item.active .tab-text {
-    font-weight: 900;
-  }
+  .tab-item.active .tab-text { font-weight:900; }
+  .filter-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px}
+  .filter-chip{flex:0 0 auto;border:1px solid var(--border-color);background:#fff;color:var(--text-muted);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:800;cursor:pointer}
+  .filter-chip.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary)}
+  .data-note{font-size:10px;color:var(--text-muted);line-height:1.5;margin-top:6px}
+  .rate-pair{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border-color)}
+  .rate-pair:last-child{border-bottom:0}
 
   /* 모달 */
   .modal-overlay {
@@ -724,7 +712,7 @@
         <div class="hero-banner">
           <span class="hero-badge">2026년 최신 수수료 우대</span>
           <h1 class="hero-title">주식 투자 시작전,<br>수수료부터 비교하세요</h1>
-          <p class="hero-sub">예상 거래 금액을 입력하면 증권사별 실시간 수수료를 한눈에 확인할 수 있습니다.</p>
+          <p class="hero-sub">거래 금액과 시장을 선택하면 공식 안내에서 확인한 증권사별 기본 수수료를 비교할 수 있습니다.</p>
           <div class="hero-decor">%</div>
         </div>
 
@@ -734,7 +722,11 @@
             거래 금액 입력
           </div>
 
-          <label class="input-label" for="amount-input">매수 / 매도 금액 (원)</label>
+          <label class="input-label" for="market-select">비교할 주식 시장</label>
+          <select id="market-select" class="amount-input" style="padding-right:14px;margin-bottom:14px;" onchange="updateMarketLabel()">
+            <option value="domestic">국내 주식 (KRW)</option><option value="us">미국 주식 (USD)</option>
+          </select>
+          <label class="input-label" id="amount-label" for="amount-input">매수 / 매도 금액 (원)</label>
           <div class="input-wrapper">
             <input type="number" id="amount-input" value="10000000" placeholder="금액 입력" class="amount-input">
             <span class="currency-unit">원</span>
@@ -764,7 +756,8 @@
 
       <!-- 2. ⇄ 수수료 비교 탭 -->
       <section id="tab-compare" class="tab-content">
-        <div class="card" style="padding: 16px; margin-bottom: 14px;">
+        <div class="card" style="padding:16px;margin-bottom:14px;">
+          <div style="display:flex;gap:8px;margin-bottom:12px;"><button class="filter-chip active" id="market-domestic-btn" onclick="setMarket('domestic')">국내 주식</button><button class="filter-chip" id="market-us-btn" onclick="setMarket('us')">미국 주식</button></div>
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
               <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; display: block;">입력한 거래 금액</span>
@@ -791,11 +784,10 @@
 
       <!-- 3. ▤ 증권사 정보 탭 -->
       <section id="tab-info" class="tab-content">
-        <div style="font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
-          <span>증권사별 주요 혜택</span>
-          <span style="font-size: 11px; color: var(--primary); font-weight: 700;">터치하여 상세 보기</span>
-        </div>
-
+        <div style="font-size:16px;font-weight:800;color:var(--text-main);margin-bottom:8px;">증권사 정보</div>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:14px;">국내 주요 증권사 8곳의 기본 수수료와 공식 안내를 확인할 수 있습니다. 계좌 종류와 이벤트에 따라 실제 적용 요율은 달라질 수 있습니다.</p>
+        <input id="broker-search" class="login-input" style="margin-bottom:10px;" type="search" placeholder="증권사 이름 검색" oninput="renderInfo()">
+        <div class="filter-chips"><button class="filter-chip active" data-filter="all" onclick="setBrokerFilter('all')">전체</button><button class="filter-chip" data-filter="full" onclick="setBrokerFilter('full')">종합 증권사</button><button class="filter-chip" data-filter="online" onclick="setBrokerFilter('online')">온라인 중심</button></div>
         <div id="info-list"></div>
       </section>
 
@@ -940,8 +932,7 @@
         </div>
 
         <div style="background-color: var(--bg-main); padding: 14px; border-radius: 14px; margin-bottom: 16px;">
-          <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 2px;">수수료율</span>
-          <span id="modal-rate" style="font-size: 18px; font-weight: 900; color: var(--primary);">0.003%</span>
+          <span style="font-size:11px;color:var(--text-muted);font-weight:700;display:block;margin-bottom:2px;">시장별 온라인 수수료 안내</span><span id="modal-rate" style="font-size:15px;font-weight:900;color:var(--primary);">공식 확인 필요</span>
         </div>
 
         <div style="margin-bottom: 16px;">
@@ -954,7 +945,7 @@
           <p id="modal-condition" style="font-size: 12px; color: var(--text-muted); background: #f8fafc; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color);"></p>
         </div>
 
-        <button onclick="applyBroker()" class="btn-primary">혜택받고 계좌 개설하기</button>
+        <a id="modal-source-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration:none;">공식 수수료 안내 보기</a>
       </div>
     </div>
 
@@ -1045,73 +1036,29 @@
     showToast('로그아웃되었습니다.');
   }
 
-  const brokers = [
-    {
-      id: 'kb',
-      name: 'KB증권',
-      color: 'linear-gradient(135deg, #f59e0b, #d97706)',
-      rate: 0.003,
-      tag: '최저 수수료',
-      benefits: [
-        '신규 고객 평생 수수료 우대 (0.003%)',
-        '해외주식 원화주문 수수료 0원',
-        '주식 쿠폰 3만원 즉시 지급'
-      ],
-      condition: '비대면 최초 신규 계좌 개설 및 이벤트 신청 시'
-    },
-    {
-      id: 'mirae',
-      name: '미래에셋증권',
-      color: 'linear-gradient(135deg, #ea580c, #c2410c)',
-      rate: 0.0035,
-      tag: '인기 증권사',
-      benefits: [
-        '온라인 주식 거래 수수료 평생 우대',
-        '미국 주식 거래 축하금 $30 지급',
-        '실시간 다우존스 뉴스 무료'
-      ],
-      condition: '신규 및 휴면 고객 대상 (이벤트 기간 내)'
-    },
-    {
-      id: 'nh',
-      name: 'NH투자증권 (나무)',
-      color: 'linear-gradient(135deg, #10b981, #047857)',
-      rate: 0.004,
-      tag: '공모주 추천',
-      benefits: [
-        '국내 주식 수수료 우대 혜택',
-        '환전 우대율 최대 100%',
-        '공모주 청약 수수료 면제'
-      ],
-      condition: '나무 전용 앱을 통한 비대면 계좌 개설 고객'
-    },
-    {
-      id: 'kiwoom',
-      name: '키움증권',
-      color: 'linear-gradient(135deg, #e11d48, #be123c)',
-      rate: 0.0045,
-      tag: '점유율 1위',
-      benefits: [
-        '영웅문 앱 이용 시 우대 수수료',
-        '현금 4만원 100% 증정 이벤트',
-        '조건 검색식 무제한 이용'
-      ],
-      condition: '비대면 계좌 개설 이벤트 신청 완료 시'
-    },
-    {
-      id: 'samsung',
-      name: '삼성증권',
-      color: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
-      rate: 0.005,
-      tag: '우수 프리미엄',
-      benefits: [
-        '온라인 거래 우대 수수료율 적용',
-        '해외주식 지원금 $20 지원',
-        '프리미엄 투자 리포트 제공'
-      ],
-      condition: 'mPOP 앱에서 최초 신규 계좌 개설 고객'
-    }
+  const DATA_CHECKED='2026-11-17';
+  // 공식 안내에서 확인한 온라인 대표 요율. 이벤트·계좌·거래채널별 적용 조건은 별도 확인 필요.
+  const brokers=[
+    {id:'kb',name:'KB증권',group:'full',color:'#d97706',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['국내·미국주식 요율은 계좌별 공식 안내 확인 필요'],condition:'계좌 유형과 이벤트 참여 여부에 따라 달라질 수 있습니다.',source:'https://www.kbsec.com/go.able?linkcd=m06030007'},
+    {id:'mirae',name:'미래에셋증권',group:'full',color:'#ea580c',domesticRate:.00014,usRate:.0025,tag:'종합 증권사',benefits:['국내 다이렉트 온라인 기본요율 0.014%','미국주식 온라인 기본요율 0.25%'],condition:'다이렉트 계좌 기준 기본요율입니다. 이벤트 우대는 신청·기간 조건을 확인하세요.',source:'https://securities.miraeasset.com/hki/hki7000/v05.do?cs_ecis_id=202412029'},
+    {id:'nh',name:'NH투자증권 (나무)',group:'full',color:'#059669',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['나무 계좌의 국내·미국주식 요율은 공식 안내 확인 필요'],condition:'나무 계좌 유형과 이벤트 조건에 따라 달라질 수 있습니다.',source:'https://www.mynamuh.com/tx/WMDoc.action?viewPage=/tx/customerService/chargeInfo.jsp'},
+    {id:'kiwoom',name:'키움증권',group:'online',color:'#e11d48',domesticRate:.00015,usRate:.0025,tag:'온라인 중심',benefits:['국내주식 온라인 대표요율 0.015%','미국주식 온라인 기본요율 0.25%'],condition:'제휴 안내에서 확인한 대표요율이며 계좌별·이벤트 적용 여부를 확인해야 합니다.',source:'https://www.kiwoom.com/h/customer/fee/VFeeInfoView'},
+    {id:'samsung',name:'삼성증권',group:'full',color:'#2563eb',domesticRate:null,usRate:null,tag:'종합 증권사',benefits:['국내 온라인 수수료는 거래금액 구간별 차등','미국주식 요율은 계좌별 공식 안내 확인 필요'],condition:'국내 온라인 수수료는 금액별 정률·정액 요율 및 최저수수료 조건이 있습니다.',source:'https://www.samsungpop.com/ux/kor/customer/guide/workproductguide/commission.do',samsungTier:true},
+    {id:'korea',name:'한국투자증권 (뱅키스)',group:'full',color:'#0f766e',domesticRate:.000140527,usRate:.0025,tag:'종합 증권사',benefits:['뱅키스 국내주식 온라인 KRX 0.0140527%','미국주식 온라인 기본요율 0.25%'],condition:'뱅키스 온라인 계좌 기준입니다. 영업점 계좌는 다른 요율이 적용될 수 있습니다.',source:'https://securities.koreainvestment.com/main/customer/guide/_static/TF04ae010000.jsp'},
+    {id:'shinhan',name:'신한투자증권',group:'full',color:'#1d4ed8',domesticRate:.001891639,usRate:.0025,tag:'종합 증권사',benefits:['국내주식 모바일 온라인 일반요율 0.1891639%','미국주식 온라인 기본요율 0.25%'],condition:'모바일 온라인 일반요율 기준입니다. 계좌별 우대수수료는 별도 확인이 필요합니다.',source:'https://ir.shinhaninvest.com/siw/customer-center/guide/business_guide_charge_tab1/contents.do'},
+    {id:'toss',name:'토스증권',group:'online',color:'#2563eb',domesticRate:.00015,usRate:.001,tag:'모바일 중심',benefits:['국내주식 KRX 0.015% / NXT 0.014%','미국주식 0.1%, 주문별 체결금액 $10 이하 매매수수료 면제'],condition:'거래세·현지 제비용 및 환전 비용은 별도입니다.',source:'https://p.tossinvest.com/ko/open-api'}
   ];
+  let brokerFilter='all',selectedMarket='domestic';
+  function getRateText(b,m){
+    if(m==='us')return b.usRate==null?'공식 확인 필요':(b.usRate*100).toFixed(4).replace(/0+$/,'').replace(/\.$/,'')+'%';
+    if(b.samsungTier)return '거래금액 구간별 차등';
+    return b.domesticRate==null?'공식 확인 필요':(b.domesticRate*100).toFixed(6).replace(/0+$/,'').replace(/\.$/,'')+'%';
+  }
+  function calculateBrokerFee(b,amount,m){
+    if(m==='us'){if(b.usRate==null)return null;if(b.id==='toss'&&amount<=10)return 0;return Math.round(amount*b.usRate*100)/100;}
+    if(b.samsungTier){if(amount<500000)return amount*.00497216;if(amount<10000000)return amount*.00147216+1500;if(amount<50000000)return amount*.00127216+3000;if(amount<100000000)return amount*.00117216;if(amount<300000000)return amount*.00097216;return amount*.00077216;}
+    return b.domesticRate==null?null:Math.round(amount*b.domesticRate);
+  }
 
   function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -1146,62 +1093,20 @@
     showToast('수수료 비교 결과가 업데이트되었습니다.');
   }
 
-  function renderCompare() {
-    const amount = Number(document.getElementById('amount-input').value) || 10000000;
-    document.getElementById('target-amount-display').textContent = `${amount.toLocaleString()} 원`;
-
-    const sorted = [...brokers].sort((a, b) => (amount * a.rate) - (amount * b.rate));
-    document.getElementById('total-count').textContent = sorted.length;
-
-    const listEl = document.getElementById('compare-list');
-    listEl.innerHTML = sorted.map((broker, index) => {
-      const fee = Math.round(amount * broker.rate);
-      const isBest = index === 0;
-
-      return `
-        <div class="broker-card ${isBest ? 'best' : ''}" onclick="openModal('${broker.id}')">
-          <div class="broker-left">
-            <div class="broker-badge-logo" style="background: ${broker.color};">
-              ${broker.name.charAt(0)}
-            </div>
-            <div>
-              <div class="broker-info-name">
-                ${broker.name}
-                ${isBest ? `<span class="tag-best">가장 저렴!</span>` : ''}
-              </div>
-              <div class="broker-info-rate">수수료율 ${(broker.rate * 100).toFixed(3)}%</div>
-            </div>
-          </div>
-          <div class="broker-right">
-            <div class="price-value ${isBest ? 'best-text' : ''}">${fee.toLocaleString()}원</div>
-            <div class="price-label">예상 수수료</div>
-          </div>
-        </div>
-      `;
-    }).join('');
+  function updateMarketLabel(){selectedMarket=document.getElementById('market-select').value;document.getElementById('amount-label').textContent=selectedMarket==='us'?'매수 / 매도 금액 (USD)':'매수 / 매도 금액 (원)';document.querySelector('.currency-unit').textContent=selectedMarket==='us'?'USD':'원';}
+  function setMarket(m){selectedMarket=m;document.getElementById('market-select').value=m;updateMarketLabel();document.getElementById('market-domestic-btn').classList.toggle('active',m==='domestic');document.getElementById('market-us-btn').classList.toggle('active',m==='us');renderCompare();}
+  function renderCompare(){
+    const amount=Number(document.getElementById('amount-input').value)||(selectedMarket==='us'?1000:10000000),unit=selectedMarket==='us'?'USD':'원';
+    document.getElementById('target-amount-display').textContent=amount.toLocaleString()+' '+unit;
+    const rows=brokers.map(x=>({...x,fee:calculateBrokerFee(x,amount,selectedMarket)})),known=rows.filter(x=>x.fee!==null).sort((x,y)=>x.fee-y.fee),sorted=[...known,...rows.filter(x=>x.fee===null)];
+    document.getElementById('total-count').textContent=sorted.length;
+    document.getElementById('compare-list').innerHTML=sorted.map((x,i)=>{const best=x.fee!==null&&i===0,fee=x.fee===null?'공식 확인 필요':(selectedMarket==='us'?'$'+x.fee.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):Math.round(x.fee).toLocaleString()+'원');return `<div class="broker-card ${best?'best':''}" onclick="openModal('${x.id}')"><div class="broker-left"><div class="broker-badge-logo" style="background:${x.color};">${x.name.charAt(0)}</div><div><div class="broker-info-name">${x.name} ${best?'<span class="tag-best">표시 요율 중 낮음</span>':''}</div><div class="broker-info-rate">온라인 기본요율: ${getRateText(x,selectedMarket)}</div></div></div><div class="broker-right"><div class="price-value ${best?'best-text':''}" style="font-size:14px;">${fee}</div><div class="price-label">예상 매매수수료</div></div></div>`;}).join('')+`<p class="data-note">매수 또는 매도 1회 기준 단순 예상치입니다. 국내주식 유관기관 제비용·거래세, 미국주식 SEC fee 및 환전 비용은 포함하지 않았습니다. 계좌·거래 채널·이벤트에 따라 실제 요율은 달라질 수 있습니다.</p>`;
   }
-
-  function renderInfo() {
-    const listEl = document.getElementById('info-list');
-    listEl.innerHTML = brokers.map(broker => `
-      <div class="card" style="cursor: pointer; margin-bottom: 12px;" onclick="openModal('${broker.id}')">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div class="broker-badge-logo" style="background: ${broker.color}; width: 36px; height: 36px; font-size: 15px;">
-              ${broker.name.charAt(0)}
-            </div>
-            <div>
-              <div style="font-weight: 800; font-size: 15px; color: var(--text-main);">${broker.name}</div>
-              <div style="font-size: 11px; color: var(--primary); font-weight: 700;">수수료율 ${(broker.rate * 100).toFixed(3)}%</div>
-            </div>
-          </div>
-          <span style="font-size: 11px; background: var(--bg-main); padding: 4px 10px; border-radius: 20px; font-weight: 700; color: var(--text-muted);">${broker.tag}</span>
-        </div>
-        <div style="background: var(--bg-main); padding: 10px 12px; border-radius: 10px; font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px;">
-          ${broker.benefits.slice(0, 2).map(b => `<div>• ${b}</div>`).join('')}
-        </div>
-      </div>
-    `).join('');
+  function setBrokerFilter(f){brokerFilter=f;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));renderInfo();}
+  function renderInfo(){
+    const q=(document.getElementById('broker-search')?.value||'').trim().toLowerCase(),list=document.getElementById('info-list');
+    const filtered=brokers.filter(x=>x.name.toLowerCase().includes(q)&&(brokerFilter==='all'||x.group===brokerFilter));
+    list.innerHTML=filtered.length?filtered.map(x=>`<div class="card" style="cursor:pointer;margin-bottom:12px;" onclick="openModal('${x.id}')"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><div style="display:flex;align-items:center;gap:10px;"><div class="broker-badge-logo" style="background:${x.color};width:38px;height:38px;font-size:15px;">${x.name.charAt(0)}</div><div><div style="font-weight:800;font-size:14px;color:var(--text-main);">${x.name}</div><div style="font-size:11px;color:var(--text-muted);">${x.group==='online'?'온라인 중심':'종합 증권사'}</div></div></div><span style="font-size:10px;background:var(--bg-main);padding:5px 8px;border-radius:20px;font-weight:800;color:var(--text-muted);">${x.tag}</span></div><div class="rate-pair"><span>국내 주식</span><strong>${getRateText(x,'domestic')}</strong></div><div class="rate-pair"><span>미국 주식</span><strong>${getRateText(x,'us')}</strong></div><div class="data-note">공식 안내 확인일: ${DATA_CHECKED} · 상세 조건 보기</div></div>`).join(''):'<div class="card" style="text-align:center;color:var(--text-muted);font-size:13px;">검색 결과가 없습니다.</div>';
   }
 
   function openModal(id) {
@@ -1214,15 +1119,10 @@
 
     document.getElementById('modal-title').textContent = broker.name;
     document.getElementById('modal-tag').textContent = broker.tag;
-    document.getElementById('modal-rate').textContent = `${(broker.rate * 100).toFixed(3)}%`;
-    document.getElementById('modal-condition').textContent = broker.condition;
-
-    document.getElementById('modal-benefits').innerHTML = broker.benefits.map(b => `
-      <div style="font-size: 12px; color: var(--text-main); background: #f1f5f9; padding: 10px; border-radius: 8px; font-weight: 700;">
-        ✔ ${b}
-      </div>
-    `).join('');
-
+    document.getElementById('modal-rate').textContent='국내 '+getRateText(broker,'domestic')+' / 미국 '+getRateText(broker,'us');
+    document.getElementById('modal-condition').textContent=broker.condition+' · 확인일 '+DATA_CHECKED;
+    document.getElementById('modal-benefits').innerHTML=broker.benefits.map(x=>`<div style="font-size:12px;color:var(--text-main);background:#f1f5f9;padding:10px;border-radius:8px;font-weight:700;">• ${x}</div>`).join('');
+    document.getElementById('modal-source-link').href=broker.source;
     document.getElementById('modal').classList.add('active');
   }
 
