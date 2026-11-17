@@ -467,20 +467,6 @@
   .data-note{font-size:10px;color:var(--text-muted);line-height:1.5;margin-top:6px}
   .rate-pair{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border-color)}
   .rate-pair:last-child{border-bottom:0}
-  .sort-select{max-width:190px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-main);border-radius:9px;padding:8px 10px;font-size:11px;font-weight:700}
-  .broker-logo-wrap{width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:#fff;border:1px solid var(--border-color);display:flex;align-items:center;justify-content:center;overflow:hidden}
-  .broker-logo-wrap img{width:32px;height:32px;object-fit:contain}
-  .broker-logo-fallback{font-size:15px;font-weight:900;color:var(--text-main)}
-  .favorite-toggle{border:1px solid var(--border-color);background:var(--card-bg);border-radius:9px;padding:5px 9px;color:var(--text-muted);font-size:15px;cursor:pointer}
-  .favorite-toggle.active{color:#d69e00;background:#fff9e6;border-color:#f5d779}
-  .mypage-chip-list{display:flex;flex-wrap:wrap;gap:8px}
-  .mypage-chip{display:flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);padding:7px 10px;border-radius:20px;font-size:11px;font-weight:800}
-  .mypage-text-btn,.mypage-action-btn{border:1px solid var(--border-color);background:var(--card-bg);border-radius:8px;padding:6px 9px;color:var(--primary);font-size:11px;font-weight:800;cursor:pointer}
-  .mypage-setting-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border-color)}
-  .mypage-setting-row:last-of-type{border-bottom:0}
-  .mypage-setting-row strong{display:block;font-size:12px;color:var(--text-main)}
-  .mypage-setting-row small{display:block;font-size:10px;color:var(--text-muted);margin-top:4px}
-  .history-empty{padding:14px 0;font-size:11px;color:var(--text-muted);text-align:center}
 
   /* 모달 */
   .modal-overlay {
@@ -785,7 +771,7 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px;">
           <span style="font-size: 12px; font-weight: 800; color: var(--text-main);">비교 결과 <strong id="total-count" style="color: var(--primary);">5</strong>개</span>
-          <select id="compare-sort" class="sort-select" onchange="renderCompare()" aria-label="비교 정렬 기준"><option value="fee-asc">예상 수수료 낮은순</option><option value="fee-desc">예상 수수료 높은순</option><option value="domestic-asc">국내 기본요율 낮은순</option><option value="domestic-desc">국내 기본요율 높은순</option><option value="us-asc">미국 기본요율 낮은순</option><option value="us-desc">미국 기본요율 높은순</option><option value="name-asc">증권사 이름순</option></select>
+          <span style="font-size: 11px; color: var(--text-muted);">※ 낮은 수수료순</span>
         </div>
 
         <div id="compare-list"></div>
@@ -876,17 +862,34 @@
 
           <!-- 디테일 2: 최근 수수료 비교 기록 -->
           <div class="detail-card">
-            <div class="detail-title"><span>📋 최근 수수료 비교 기록</span><button class="mypage-text-btn" onclick="clearCompareHistory()">기록 삭제</button></div><div id="compare-history-list"></div>
+            <div class="detail-title">
+              <span>📋 최근 계산 기록</span>
+            </div>
+            <div class="history-item">
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">10,000,000원 거래 비교</div>
+                <div style="font-size: 11px; color: var(--text-muted);">KB증권 최저 (30,000원)</div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-muted);">방금 전</span>
+            </div>
+            <div class="history-item">
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">50,000,000원 거래 비교</div>
+                <div style="font-size: 11px; color: var(--text-muted);">KB증권 최저 (150,000원)</div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-muted);">어제</span>
+            </div>
           </div>
-
-          <div class="detail-card"><div class="detail-title"><span>⚙️ 나의 이용 설정</span></div><div class="mypage-setting-row"><div><strong>기본 비교 시장</strong><small>수수료 비교 탭에 처음 표시할 시장</small></div><select id="preferred-market" class="sort-select" onchange="savePreference('market',this.value)"><option value="domestic">국내 주식</option><option value="us">미국 주식</option></select></div><div class="mypage-setting-row"><div><strong>기본 정렬 기준</strong><small>비교 결과의 기본 정렬 방식</small></div><select id="preferred-sort" class="sort-select" onchange="savePreference('sort',this.value)"><option value="fee-asc">낮은 수수료순</option><option value="fee-desc">높은 수수료순</option><option value="domestic-asc">국내 요율 낮은순</option><option value="domestic-desc">국내 요율 높은순</option><option value="us-asc">미국 요율 낮은순</option><option value="us-desc">미국 요율 높은순</option><option value="name-asc">이름순</option></select></div><div class="mypage-setting-row"><div><strong>닉네임 변경</strong><small>현재 기기에서 사용하는 프로필 이름</small></div><button class="mypage-action-btn" onclick="editNickname()">변경</button></div><div class="mypage-setting-row"><div><strong>저장 데이터 초기화</strong><small>관심 증권사, 비교 기록, 설정을 이 기기에서 삭제</small></div><button class="mypage-action-btn" onclick="clearPersonalData()">초기화</button></div><p class="data-note">현재 저장은 이 브라우저(localStorage)에만 적용됩니다. 다른 기기와 동기화되지 않으며 실제 계좌·자산 정보가 아닙니다.</p></div>
 
           <!-- 디테일 3: 관심 증권사 -->
           <div class="detail-card">
             <div class="detail-title">
               <span>⭐ 관심 등록 증권사</span>
             </div>
-            <div id="favorite-brokers-list" class="mypage-chip-list"></div>
+            <div style="display: flex; gap: 8px;">
+              <span style="background: var(--primary-light); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">KB증권 (0.003%)</span>
+              <span style="background: var(--bg-main); color: var(--text-main); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">미래에셋증권 (0.0035%)</span>
+            </div>
           </div>
 
         </div>
@@ -989,7 +992,6 @@
       loggedInEl.style.display = 'block';
       nameEl.textContent = currentUser;
       avatarEl.textContent = currentUser.charAt(0).toUpperCase();
-      renderMyPageDetails();
     } else {
       headerAuthBtn.innerHTML = `<span>🔑 로그인</span>`;
       loggedOutEl.style.display = 'block';
@@ -1034,16 +1036,6 @@
     showToast('로그아웃되었습니다.');
   }
 
-  function storedValue(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch(e){return fallback;}}
-  function isFavorite(id){return storedValue('favorite_brokers',[]).includes(id);}
-  function toggleFavorite(id){let ids=storedValue('favorite_brokers',[]);ids=ids.includes(id)?ids.filter(x=>x!==id):[...ids,id];localStorage.setItem('favorite_brokers',JSON.stringify(ids));renderCompare();renderInfo();renderMyPageDetails();showToast(ids.includes(id)?'관심 증권사에 추가했습니다.':'관심 증권사에서 해제했습니다.');}
-  function saveCompareHistory(){const amount=Number(document.getElementById('amount-input').value),market=selectedMarket,valid=brokers.map(b=>({...b,fee:calculateBrokerFee(b,amount,market)})).filter(b=>b.fee!==null).sort((a,b)=>a.fee-b.fee),items=storedValue('compare_history',[]);items.unshift({amount,market,date:new Date().toISOString(),lowest:valid[0]?.name||'확인 가능한 데이터 없음',fee:valid[0]?.fee??null});localStorage.setItem('compare_history',JSON.stringify(items.slice(0,10)));renderMyPageDetails();}
-  function clearCompareHistory(){localStorage.removeItem('compare_history');renderMyPageDetails();showToast('비교 기록을 삭제했습니다.');}
-  function savePreference(type,value){localStorage.setItem(type==='market'?'preferred_market':'preferred_sort',value);if(type==='sort'){const el=document.getElementById('compare-sort');if(el)el.value=value;}showToast('설정을 저장했습니다.');}
-  function editNickname(){const value=prompt('변경할 닉네임을 입력해 주세요.',currentUser||'');if(!value||!value.trim())return;currentUser=value.trim();localStorage.setItem('anon_user',currentUser);checkLoginState();showToast('닉네임을 변경했습니다.');}
-  function clearPersonalData(){if(!confirm('관심 증권사, 비교 기록, 개인 설정을 이 브라우저에서 삭제할까요?'))return;['favorite_brokers','compare_history','preferred_market','preferred_sort'].forEach(k=>localStorage.removeItem(k));renderMyPageDetails();renderCompare();showToast('개인 데이터를 초기화했습니다.');}
-  function renderMyPageDetails(){const favorites=storedValue('favorite_brokers',[]),history=storedValue('compare_history',[]),fav=document.getElementById('favorite-brokers-list'),hist=document.getElementById('compare-history-list');if(fav)fav.innerHTML=favorites.length?favorites.map(id=>{const b=brokers.find(x=>x.id===id);return b?`<span class="mypage-chip">${b.name}<button onclick="toggleFavorite('${id}')" aria-label="관심 해제" style="border:0;background:none;color:inherit;font-weight:900;">×</button></span>`:'';}).join(''):'<div class="history-empty">관심 등록한 증권사가 없습니다. 비교 결과의 ☆를 눌러 추가하세요.</div>';if(hist)hist.innerHTML=history.length?history.map(h=>`<div class="history-item"><div><div style="font-weight:800;color:var(--text-main);">${Number(h.amount).toLocaleString()} ${h.market==='us'?'USD':'원'} 비교</div><div style="font-size:11px;color:var(--text-muted);">${h.lowest} · ${h.fee==null?'수수료 확인 필요':(h.market==='us'?'$'+Number(h.fee).toFixed(2):Math.round(h.fee).toLocaleString()+'원')}</div></div><span style="font-size:10px;color:var(--text-muted);">${new Date(h.date).toLocaleDateString('ko-KR')}</span></div>`).join(''):'<div class="history-empty">아직 비교 기록이 없습니다. 수수료 비교를 실행하면 자동 저장됩니다.</div>';const market=document.getElementById('preferred-market'),sort=document.getElementById('preferred-sort');if(market)market.value=localStorage.getItem('preferred_market')||'domestic';if(sort)sort.value=localStorage.getItem('preferred_sort')||'fee-asc';}
-
   const DATA_CHECKED='2026-11-17';
   // 공식 안내에서 확인한 온라인 대표 요율. 이벤트·계좌·거래채널별 적용 조건은 별도 확인 필요.
   const brokers=[
@@ -1076,14 +1068,11 @@
     document.getElementById(`nav-${tabId}`).classList.add('active');
 
     if (tabId === 'compare') {
-      const market=localStorage.getItem('preferred_market');if(market){document.getElementById('market-select').value=market;selectedMarket=market;updateMarketLabel();}
-      const sort=document.getElementById('compare-sort');if(sort)sort.value=localStorage.getItem('preferred_sort')||'fee-asc';
       renderCompare();
     } else if (tabId === 'info') {
       renderInfo();
     } else if (tabId === 'mypage') {
       checkLoginState();
-      renderMyPageDetails();
     }
   }
 
@@ -1101,7 +1090,6 @@
       return;
     }
     switchTab('compare');
-    saveCompareHistory();
     showToast('수수료 비교 결과가 업데이트되었습니다.');
   }
 
@@ -1115,76 +1103,12 @@
     quick.innerHTML=selectedMarket==='us'?'<button onclick="addAmount(100)" class="quick-btn">+$100</button><button onclick="addAmount(500)" class="quick-btn">+$500</button><button onclick="addAmount(1000)" class="quick-btn">+$1,000</button><button onclick="addAmount(5000)" class="quick-btn">+$5,000</button>':'<button onclick="addAmount(1000000)" class="quick-btn">+100만</button><button onclick="addAmount(5000000)" class="quick-btn">+500만</button><button onclick="addAmount(10000000)" class="quick-btn">+1천만</button><button onclick="addAmount(50000000)" class="quick-btn">+5천만</button>';
   }
   function setMarket(m){document.getElementById('market-select').value=m;updateMarketLabel();document.getElementById('market-domestic-btn').classList.toggle('active',m==='domestic');document.getElementById('market-us-btn').classList.toggle('active',m==='us');renderCompare();}
-  function brokerLogoDomain(id){return ({kb:'kbsec.com',mirae:'securities.miraeasset.com',nh:'mynamuh.com',kiwoom:'kiwoom.com',samsung:'samsungpop.com',korea:'koreainvestment.com',shinhan:'shinhansec.com',toss:'tossinvest.com'})[id]||'';}
-  function brokerLogo(b){const d=brokerLogoDomain(b.id);return `<div class="broker-logo-wrap"><img src="https://www.google.com/s2/favicons?domain=${d}&sz=128" alt="${b.name} 로고" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="broker-logo-fallback" style="display:none">${b.name.charAt(0)}</span></div>`;}
   function renderCompare(){
     const amount=Number(document.getElementById('amount-input').value)||(selectedMarket==='us'?1000:10000000),unit=selectedMarket==='us'?'USD':'원';
     document.getElementById('target-amount-display').textContent=amount.toLocaleString()+' '+unit;
-    const rows=brokers.map(x=>({...x,fee:calculateBrokerFee(x,amount,selectedMarket)}));
-    const sort=document.getElementById('compare-sort')?.value||localStorage.getItem('preferred_sort')||'fee-asc';
-    const field=sort.startsWith('domestic')?'domesticRate':sort.startsWith('us-')?'usRate':'fee';
-    const descending=sort.endsWith('-desc');
-    const sorted=[...rows].sort((a,b)=>{if(sort==='name-asc')return a.name.localeCompare(b.name,'ko');const av=a[field],bv=b[field];if(av==null&&bv==null)return a.name.localeCompare(b.name,'ko');if(av==null)return 1;if(bv==null)return -1;return descending?bv-av:av-bv;});
+    const rows=brokers.map(x=>({...x,fee:calculateBrokerFee(x,amount,selectedMarket)})),known=rows.filter(x=>x.fee!==null).sort((x,y)=>x.fee-y.fee),sorted=[...known,...rows.filter(x=>x.fee===null)];
     document.getElementById('total-count').textContent=sorted.length;
-    const bestId=sort==='fee-asc'?sorted.find(x=>x.fee!==null)?.id:null;
-    document.getElementById('compare-list').innerHTML=sorted.map(x=>{const best=x.id===bestId,fee=x.fee===null?'공식 확인 필요':(selectedMarket==='us'?'
-  function setBrokerFilter(f){brokerFilter=f;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));renderInfo();}
-  function renderInfo(){
-    const q=(document.getElementById('broker-search')?.value||'').trim().toLowerCase(),list=document.getElementById('info-list');
-    const filtered=brokers.filter(x=>x.name.toLowerCase().includes(q)&&(brokerFilter==='all'||x.group===brokerFilter));
-    list.innerHTML=filtered.length?filtered.map(x=>`<div class="card" style="cursor:pointer;margin-bottom:12px;" onclick="openModal('${x.id}')"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><div style="display:flex;align-items:center;gap:10px;">${brokerLogo(x)}<div><div style="font-weight:800;font-size:14px;color:var(--text-main);">${x.name}</div><div style="font-size:11px;color:var(--text-muted);">${x.group==='online'?'온라인 중심':'종합 증권사'}</div></div></div><span style="font-size:10px;background:var(--bg-main);padding:5px 8px;border-radius:20px;font-weight:800;color:var(--text-muted);">${x.tag}</span></div><div class="rate-pair"><span>국내 주식</span><strong>${getRateText(x,'domestic')}</strong></div><div class="rate-pair"><span>미국 주식</span><strong>${getRateText(x,'us')}</strong></div><div class="data-note">공식 안내 확인일: ${DATA_CHECKED} · 상세 조건 보기</div></div>`).join(''):'<div class="card" style="text-align:center;color:var(--text-muted);font-size:13px;">검색 결과가 없습니다.</div>';
-  }
-
-  function openModal(id) {
-    const broker = brokers.find(b => b.id === id);
-    if (!broker) return;
-
-    const logo = document.getElementById('modal-logo');
-    logo.outerHTML = brokerLogo(broker).replace('broker-logo-wrap','broker-logo-wrap" id="modal-logo');
-
-    document.getElementById('modal-title').textContent = broker.name;
-    document.getElementById('modal-tag').textContent = broker.tag;
-    document.getElementById('modal-rate').textContent='국내 '+getRateText(broker,'domestic')+' / 미국 '+getRateText(broker,'us');
-    document.getElementById('modal-condition').textContent=broker.condition+' · 확인일 '+DATA_CHECKED;
-    document.getElementById('modal-benefits').innerHTML=broker.benefits.map(x=>`<div style="font-size:12px;color:var(--text-main);background:#f1f5f9;padding:10px;border-radius:8px;font-weight:700;">• ${x}</div>`).join('');
-    document.getElementById('modal-source-link').href=broker.source;
-    document.getElementById('modal').classList.add('active');
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.remove('active');
-  }
-
-  function applyBroker() {
-    closeModal();
-    showToast('해당 증권사로 연결됩니다. (시뮬레이션)');
-  }
-
-  function resetApp() {
-    document.getElementById('market-select').value='domestic';
-    selectedMarket='domestic';
-    document.getElementById('amount-input').value = 10000000;
-    updateMarketLabel();
-    switchTab('home');
-    showToast('초기 상태로 되돌렸습니다.');
-  }
-
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2000);
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    checkLoginState();
-  });
-</script>
-</body>
-</html>
-+x.fee.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):Math.round(x.fee).toLocaleString()+'원');return `<div class="broker-card ${best?'best':''}" onclick="openModal('${x.id}')"><div class="broker-left">${brokerLogo(x)}<div><div class="broker-info-name">${x.name} ${best?'<span class="tag-best">표시 요율 중 낮음</span>':''}</div><div class="broker-info-rate">온라인 기본요율: ${getRateText(x,selectedMarket)}</div></div></div><div class="broker-right"><div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;"><div class="price-value ${best?'best-text':''}" style="font-size:14px;">${fee}</div><button class="favorite-toggle ${isFavorite(x.id)?'active':''}" aria-label="관심 증권사 ${x.name}" onclick="event.stopPropagation();toggleFavorite('${x.id}')">${isFavorite(x.id)?'★':'☆'}</button></div><div class="price-label">예상 매매수수료</div></div></div>`;}).join('')+`<p class="data-note">정렬 기준을 선택해 결과 순서를 바꿀 수 있습니다. 매수 또는 매도 1회 기준 단순 예상치이며, 거래세·유관기관 제비용·환전 비용은 포함하지 않습니다.</p>`;
+    document.getElementById('compare-list').innerHTML=sorted.map((x,i)=>{const best=x.fee!==null&&i===0,fee=x.fee===null?'공식 확인 필요':(selectedMarket==='us'?'$'+x.fee.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):Math.round(x.fee).toLocaleString()+'원');return `<div class="broker-card ${best?'best':''}" onclick="openModal('${x.id}')"><div class="broker-left"><div class="broker-badge-logo" style="background:${x.color};">${x.name.charAt(0)}</div><div><div class="broker-info-name">${x.name} ${best?'<span class="tag-best">표시 요율 중 낮음</span>':''}</div><div class="broker-info-rate">온라인 기본요율: ${getRateText(x,selectedMarket)}</div></div></div><div class="broker-right"><div class="price-value ${best?'best-text':''}" style="font-size:14px;">${fee}</div><div class="price-label">예상 매매수수료</div></div></div>`;}).join('')+`<p class="data-note">매수 또는 매도 1회 기준 단순 예상치입니다. 국내주식 유관기관 제비용·거래세, 미국주식 SEC fee 및 환전 비용은 포함하지 않았습니다. 계좌·거래 채널·이벤트에 따라 실제 요율은 달라질 수 있습니다.</p>`;
   }
   function setBrokerFilter(f){brokerFilter=f;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));renderInfo();}
   function renderInfo(){
