@@ -157,8 +157,8 @@
 
 ---
 
-## 참고 자료
+### 2-13. 참고 자료
 
 - [프로젝트 Notion 문서](https://app.notion.com/p/3dce80d690ea8072ac71efcbeb86e438)
 - [모바일 웹 프로토타입](./index.html)
-- [배포 사이트](https://unitsice-a.github.io/deepscape1/)
+- [화면 참고 사이트](https://heejeong-kim.github.io/utilization-of-generativeai/index.html)
